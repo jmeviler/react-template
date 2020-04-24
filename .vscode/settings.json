@@ -7,7 +7,6 @@
   "editor.trimAutoWhitespace": true,
   "editor.wordWrap": "on",
   "editor.wordWrapColumn": 120,
-  "eslint.autoFixOnSave": true,
   "files.associations": {
     ".stylelintrc": "json"
   },
@@ -49,5 +48,8 @@
     "**/bower_components": true,
     ".vscode": true
   },
-  "sort-imports.suppress-warnings": true
+  "sort-imports.suppress-warnings": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

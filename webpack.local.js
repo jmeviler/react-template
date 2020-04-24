@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 9527;
 const {
   BACKEND_PROTOCOL = 'http',
   BACKEND_DOMAIN = '', // TODO

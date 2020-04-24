@@ -9,6 +9,6 @@
     "amatiasq.sort-imports", // import 排序
 
     // style 相关
-    "shinnn.stylelint"
+    "stylelint.vscode-stylelint"
   ]
 }

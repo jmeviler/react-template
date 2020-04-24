@@ -2,75 +2,51 @@ import Engine from '~/engine';
 import { Storage } from '~/plugins';
 import * as ReduxEnhance from '~/plugins/ReduxEnhance';
 import res from '~/resources';
-import { LocaleProvider } from 'antd';
+import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
-import createHistory from 'history/createHashHistory';
+import { ConnectedRouter, connectRouter, routerActions, routerMiddleware } from 'connected-react-router';
+import { createHashHistory } from 'history';
+import qhistory from 'qhistory';
+import { parse, stringify } from 'qs';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { Switch } from 'react-router-dom';
-import { ConnectedRouter, routerActions, routerMiddleware, routerReducer } from 'react-router-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
 import { i18n } from 'redux-pagan';
 import thunk from 'redux-thunk';
 
-import CommonLayout from './CommonLayout';
 import Redux, { reducer as redux } from './Redux';
 import Rest, { reducer as rest } from './Rest';
 
+const history = qhistory(
+  createHashHistory(),
+  stringify,
+  parse
+);
+
 const reducer = combineReducers({
-  routing: routerReducer,
+  router: connectRouter(history),
   i18n,
   redux,
   rest,
 });
-const history = createHistory();
+
 export const store = createStore(
-  reducer,
+  connectRouter(history)(reducer),
   compose(
     applyMiddleware(thunk),
     applyMiddleware(routerMiddleware(history)),
     applyMiddleware(createLogger({
       predicate: () => {
         // eslint-disable-next-line
-        return process.env.ENV !== 'production' || localStorage.debug;
+        // return process.env.ENV !== 'production' || localStorage.debug;
       },
     }))
   )
 );
 
 ReduxEnhance.init(store, res);
-
-const routes = {
-  '/redux': {
-    iconType: 'pie-chart',
-    title: 'Redux Demo',
-    component: Redux,
-  },
-  '/rest': {
-    iconType: 'desktop',
-    title: 'Rest Demo',
-    component: Rest,
-  },
-  '/group': {
-    iconType: 'pie-chart',
-    title: 'group',
-    items: {
-      '/redux': {
-        iconType: 'pie-chart',
-        component: Redux,
-        title: 'Redux Demo',
-        group: 'group',
-      },
-      '/rest': {
-        iconType: 'desktop',
-        component: Rest,
-        title: 'Rest Demo',
-        group: 'group',
-      },
-    },
-  },
-};
 
 export default class Pages extends Component {
   state = { isReady: false }
@@ -104,15 +80,17 @@ export default class Pages extends Component {
     }
 
     return (
-      <LocaleProvider locale={zhCN} >
+      <ConfigProvider locale={zhCN} >
         <Provider store={store}>
           <ConnectedRouter history={history} >
             <Switch>
-              <CommonLayout routes={routes} />
+              <Route exact path="/" component={Rest} />
+              <Route exact path="/test" component={Redux} />
+              <Redirect to="/" />
             </Switch>
           </ConnectedRouter>
         </Provider>
-      </LocaleProvider>
+      </ConfigProvider>
     );
   }
 }

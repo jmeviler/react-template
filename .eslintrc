@@ -5,6 +5,7 @@
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
+      "legacyDecorators": true,
       "jsx": true
     }
   },
