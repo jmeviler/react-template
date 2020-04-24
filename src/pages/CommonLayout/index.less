@@ -1,0 +1,57 @@
+@import "antd/lib/style/themes/default.less";
+
+.common-layout {
+  min-height: 100vh;
+
+  .logo-container {
+    position: relative;
+    height: 64px;
+    overflow: hidden;
+    padding-left: (@menu-collapsed-width - 32px) / 2;
+    background: #002741;
+    line-height: 64px;
+    transition: all .3s;
+
+    img {
+      display: inline-block;
+      height: 32px;
+      vertical-align: middle;
+    }
+
+    h1 {
+      display: inline;
+      margin: 0 0 0 12px;
+      vertical-align: middle;
+      font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+    }
+  }
+
+  .page-container {
+    margin: 0 24px;
+  }
+
+  .layout-content {
+    // min-width: 650px;
+  }
+}
+
+input[type=button] {
+  // 使用 input button 文字没有选中效果
+  border: 0;
+  background-color: transparent;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.ant-menu-inline-collapsed > .ant-menu-item .anticon + input,
+.ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title .anticon + input,
+.ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item .anticon + input {
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+}
