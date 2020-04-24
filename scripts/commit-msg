@@ -30,8 +30,7 @@ read msg < .git/COMMIT_EDITMSG
 
 max_length=100
 length=${#msg}
-pattern='^(hotfix|fix|refactor|feat)\(?[a-zA-Z0-9\-]*\)?: .*( #\d+)?$'
-
+pattern='^(hotfix|fix|refactor|feat)\(?[a-zA-Z0-9\-]*\)?: .*( \d+)?$'
 if [[ $msg =~ $pattern ]]; then
     if [[ $length -gt $max_length ]]; then
         showErrorMsg "$msg" $length_exception "$length"
